@@ -11,17 +11,33 @@ def distance(city1, city2):
 
 def initcenters(centers,n,cities):
     for i in range(n):
-        centers[i] = cities[i*n]
+        centers = [random.uniform(0,1600.0)][random.uniform(0,900.0)]
+        #centers[i] = cities[i*n]
     return centers
 
-def calc_new_centers(centernum,centercities,n,N,cities):
+def calc_new_centers(group,n,N,cities):
+    newcenters = [[0 for k in range(2)] for i in range(n)]
+    while(group[l] != []):
+        group[l][
     for t in range(N):
         for i in range(n):
-            if(centernum[t] == cities[i*n]):
-                sum[i] += (cities[t]-centercities[i])**2
-               # sum[i][1] += (cities[t][1]-centercities[i][1])**2
-    newcentercities[i] = (sum[i] / n)  + centercities[i]        
-    return newcentercities
+            sum[i] += (group[i][])**2
+             
+    newcenters[i] = (sum[i] / n)  + centers[i]        
+    return newcenters
+
+def make_group(centers,cities,n,N):
+    group =[[0] for i in range(n)]
+        for t in range(N):
+            min_dis = min(distance(centers[0],cities[t]))
+            group_num = 0
+            for l in range(n):
+                if(min_dis >min(distance(centers[l],cities[t])):
+                   min_dis = min(distance(centers[l],cities[t]))
+                   group_num = l;
+            group[group_num].append(t)
+    return group
+
 
 def kmeans(cities):
     N = len(cities)    
@@ -30,20 +46,17 @@ def kmeans(cities):
         for j in range(N):
             dist[i][j] = dist[j][i] = distance(cities[i], cities[j])
     n = (int)(math.sqrt(N))
-    centercities = [[0 for k in range(2)] for i in range(n)]
-    centercities = initcenters(centercities,n,cities)
+    centers = [[0 for k in range(2)] for i in range(n)]
+    centers = initcenters(centers,n,cities)
     for i in range(n):
-        print centercities
+        print centers
     for s in range(100):
-        for t in range(N):
-            for l in range(n):
-                group[l][]   = min(distance(centercities,cities[t]))
-            #centernum[t] = min(centercities,key = (int)(distance(centercities,cities[t])))
-        newcenters = calc_new_centers(centernum,centercities,n,N,cities)
-        if(distance(centercities,newcenters)<0.5):
+        group = make_group(centers,cities,n,N)
+        newcenters = calc_new_centers(group,n,N,cities)
+        if(distance(centers,newcenters)<0.5):
             break
-        cuentercities = newcenters
-    return centernum
+        cuenters = newcenters
+    return g
     
 
 
