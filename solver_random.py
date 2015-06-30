@@ -13,6 +13,7 @@ def distance(city1, city2):
 def solve(cities):
     # Build a trivial solution.
     # Visit the cities in the order they appear in the input.
+    print cities[0]
     return list(range(len(cities)))
 
 
