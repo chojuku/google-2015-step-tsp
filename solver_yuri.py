@@ -68,10 +68,10 @@ def solve(group,cities):
     for i in range(N):
         for j in range(N):
             dist[i][j] = dist[j][i] = distance(cities[grouptup[i]], cities[grouptup[j]])
-    #current_city = 0                            #current_city =0 unvisited_cities =set(1,range(N))実行されるが間違った経路となる
-    #unvisited_cities =set(1,range(N))        
-    current_city = grouptup[0]                  #正しいのはこちらのはずだが distance_from_current_cityでIndexError: list index out of range
-    unvisited_cities = set(grouptup)
+    current_city = 0                            #current_city =0 unvisited_cities =set(1,range(N))実行されるが間違った経路となる
+    unvisited_cities =set(range(1,N))        
+    #current_city = grouptup[0]                  #正しいのはこちらのはずだが distance_from_current_cityでIndexError: list index out of range
+    #unvisited_cities = set(grouptup)
     solution = [current_city]
     #print("unvisited_cities_before_while =")
     #print(unvisited_cities)
