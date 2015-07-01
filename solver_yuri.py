@@ -37,6 +37,7 @@ def make_group(centers,cities,n,N):
     return group
 
 #kmeans法によって点を近い点同士でグループ化する
+#一番最初に動く関数
 def kmeans(cities):
     N = len(cities)
     n = (int)(math.sqrt(N))
@@ -47,12 +48,12 @@ def kmeans(cities):
             dist[i][j] = dist[j][i] = distance(cities[i], cities[j])
   
     centers = [[0 for k in range(2)] for i in range(n)]
-    centers = initcenters(centers,n,cities)
+    centers = initcenters(centers,n,cities)             #初期重心リスト決定[[x][y],[x][y],[x][y],,,,]
 
     for s in range(10):
-        groups = make_group(centers,cities,n,N)
-        newcenters = calc_new_centers(groups,n,N,cities)
-        centers = newcenters
+        groups = make_group(centers,cities,n,N)         #重心に対して近い点でグループが作られたリスト
+        newcenters = calc_new_centers(groups,n,N,cities)#重心の再計算
+        centers = newcenters                            #10回K-meansを行う
          # print("newcenters")
          # print(newcenters)
     return groups
@@ -61,15 +62,15 @@ def kmeans(cities):
 
 #ある1groupに対してgreedyな経路を作成する
 def solve(group,cities):
-    grouptup = tuple(group)
+    grouptup = tuple(group)                            
     N = len(grouptup)
     dist = [[0] * N for i in range(N)]
     for i in range(N):
         for j in range(N):
             dist[i][j] = dist[j][i] = distance(cities[grouptup[i]], cities[grouptup[j]])
-    #current_city = 0
+    #current_city = 0                            #current_city =0 unvisited_cities =set(1,range(N))実行されるが間違った経路となる
     #unvisited_cities =set(1,range(N))        
-    current_city = grouptup[0]
+    current_city = grouptup[0]                  #正しいのはこちらのはずだが distance_from_current_cityでIndexError: list index out of range
     unvisited_cities = set(grouptup)
     solution = [current_city]
     #print("unvisited_cities_before_while =")
@@ -82,8 +83,8 @@ def solve(group,cities):
     while unvisited_cities:
         next_city = min(unvisited_cities, key=distance_from_current_city)
         unvisited_cities.remove(next_city)
-        print("unvisited_cities_in_while")
-        print(unvisited_cities)
+        #print("unvisited_cities_in_while")
+        #print(unvisited_cities)
         solution.append(next_city)
         current_city = next_city
     return solution
@@ -95,7 +96,7 @@ def solutionplus(groups,cities):
         solution += solve(groups[i],cities)
     return solution
 
-#Not Complete
+#Not Complete　未完成
 def merge(groups,cities):
     N = len(cities)
     dist = [[0] * N for i in range(N)]
@@ -115,7 +116,7 @@ def merge(groups,cities):
                         min_dis = dist[groups[k][i]][j]
                         mergepoint =(groups[k][i], [j])
     
-        solution = solve(groups[k],cities)
+        #solution = solve(groups[k],cities) #計算量が気に入らないのでこの方針は模索中
     
 
 
