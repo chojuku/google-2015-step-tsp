@@ -263,3 +263,42 @@ Hidden.
 ----
 
 This assignment is heavily inspired by [Discrete Optimization Course on Coursera](https://www.coursera.org/course/optimization).
+
+
+
+10. Yuri Yamamoto Ver.
+----
+
+I wanna solve this problem by divide and conquer algorithm(分割統治法).
+First, I should divide cities for groups, so I use K-means for dividing.
+
+http://tech.nitoyon.com/ja/blog/2013/11/07/k-means/
+
+↑This site is good for understanding what K-means is visually.
+def initcenters(centers,n,cities):
+def calc_new_centers(group,n,N,cities):
+def make_group(centers,cities,n,N):
+def kmeans(cities):
+
+These functions are making groups by K-means.
+
+Next, decide ways for each groups by greedy way and find centers way by greedy way too.
+(↑ I want to improve this loss, but I can't improve for a week....><)
+
+And then, they are merged.
+
+
+Good Points
+
+
+
+Bad Points
+
+
+
+
+
+
+
+
+
