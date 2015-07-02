@@ -82,7 +82,10 @@ def solve(group,cities):
 def making_centerlist(centers,cities):
     center_solution =[]
     kcenter = kmeans(centers)[0]#kcenter =[[0,2,7],[1,3,4,5,6],,,]
-    center_solution.extend(solve(kcenter, centers))#Error
+   
+    for l in range(len(kcenter)):#1 way
+       center_solution.extend(kcenter[l])#1way
+    #center_solution.extend(solve(kcenter, centers))#2way#Error
     print("center_solution")
     print(center_solution)
     return center_solution
