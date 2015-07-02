@@ -83,8 +83,8 @@ def making_centerlist(centers,cities):
     center_solution =[]
     kcenter = kmeans(centers)[0]#kcenter =[[0,2,7],[1,3,4,5,6],,,]
     center_solution.extend(solve(kcenter, centers))#Error
-    #print("center_solution")
-    #print(center_solution)
+    print("center_solution")
+    print(center_solution)
     return center_solution
 
 #各グループで作られた経路を合併させる
