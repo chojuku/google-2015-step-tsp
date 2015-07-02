@@ -105,10 +105,8 @@ def solve_centers(cities):
 #centersはcitiesと同じ[(x_1,y_1),(x_2,y_2),,,]
 def making_centerlist(centers,cities):
     center_solution =[]
-    kcenter = kmeans(centers)[0]#kcenter =[[0,2,7],[1,3,4,5,6],,,]
-   
-    #for l in range(len(kcenter)):#1st
-     #  center_solution.extend(kcenter[l])#1st
+    #kcenter = kmeans(centers)[0]#kcenter =[[0,2,7],[1,3,4,5,6],,,]#1st
+     #center_solution.extend(solve(kcenter,centers)#1st#error
     center_solution.extend(solve_centers(centers))#2nd
     #print("center_solution")
     #print(center_solution)
