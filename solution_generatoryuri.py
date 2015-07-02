@@ -14,7 +14,7 @@ def generate_sample_solutions():
     for challenge_number in range(CHALLENGES):
         cities = read_input('input_{}.csv'.format(challenge_number))
         for solver, solver_name in solvers:
-            solution = solver.solutionplus(solver.kmeans(cities),cities)
+            solution = solver.solutionplus(solver.kmeans(cities)[0],cities,solver.kmeans(cities)[1])
             with open('solution_{}_{}.csv'.format(solver_name, challenge_number), 'w') as f:
                 f.write(format_solution(solution) + '\n')
 

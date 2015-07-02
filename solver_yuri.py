@@ -56,76 +56,57 @@ def kmeans(cities):
         centers = newcenters                            #10回K-meansを行う
          # print("newcenters")
          # print(newcenters)
-    return groups
+    return groups,newcenters
     
 
 
 #ある1groupに対してgreedyな経路を作成する
 def solve(group,cities):
-    grouptup = tuple(group)                            
+    grouptup = tuple(group)
     N = len(grouptup)
-    dist = [[0] * N for i in range(N)]
-    for i in range(N):
-        for j in range(N):
-            dist[i][j] = dist[j][i] = distance(cities[grouptup[i]], cities[grouptup[j]])
-    #current_city = 0                            #current_city =0 unvisited_cities =set(1,range(N))実行されるが間違った経路となる
-    #unvisited_cities =set(range(1,N))        
-    current_city = grouptup[0]                  #正しいのはこちらのはずだが distance_from_current_cityでIndexError: list index out of range
-    unvisited_cities = set(grouptup[1:])
+    current_city = grouptup[0]
+    unvisited_cities = set(grouptup[1:])#TypeError: unhashable type: 'list'
     solution = [current_city]
-    print("unvisited_cities_before_while =")
-    print(unvisited_cities)
 
-
-    def distance_from_current_city(to):#dont change indent!
+    def distance_from_current_city(to):
         return distance(cities[current_city],cities[to])
 
     while unvisited_cities:
         next_city = min(unvisited_cities, key=distance_from_current_city)
         unvisited_cities.remove(next_city)
-        #print("unvisited_cities_in_while")
-        #print(unvisited_cities)
         solution.append(next_city)
         current_city = next_city
     return solution
 
+#centersはcitiesと同じ[(x_1,y_1),(x_2,y_2),,,]
+def making_centerlist(centers,cities):
+    center_solution =[]
+    kcenter = kmeans(centers)[0]#kcenter =[[0,2,7],[1,3,4,5,6],,,]
+    center_solution.extend(solve(kcenter, centers))#Error
+    #print("center_solution")
+    #print(center_solution)
+    return center_solution
 
-def solutionplus(groups,cities):
+#各グループで作られた経路を合併させる
+def solutionplus(groups,cities,centers):
     solution = [0]
+    center_list = making_centerlist(centers,cities)#各グループ重心のgreedy経路
+    #print("center_list")
+    #print(center_list)
     for i in range(len(groups)):
-        solution += solve(groups[i],cities)
+        k = center_list[i]#各グループの中心点のgreedy経路の順に並べる
+        solution += solve(groups[k],cities)
     return solution
-
-#Not Complete　未完成
-def merge(groups,cities):
-    N = len(cities)
-    dist = [[0] * N for i in range(N)]
-    for i in range(N):
-        for j in range(N):
-            dist[i][j] = dist[j][i] = distance(cities[i], cities[j])
-
-
-#あるグループ内のある点とその他すべての点の中で最も最短をとる点の組と２番目の組を出力
-    for k in range(len(groups)):
-        for i in range(len(groups[k])):
-            min_dis = 1000000
-            for j in range(len(cities)):
-                for s in range(len(groups[k])):
-                    if(min_dis >dist[groups[k][i]][j] and j != groups[k][s]):
-                        second_mergepoint = mergepoint
-                        min_dis = dist[groups[k][i]][j]
-                        mergepoint =(groups[k][i], [j])
     
-        #solution = solve(groups[k],cities) #計算量が気に入らないのでこの方針は模索中
-    
-
 
 if __name__ == '__main__':
     assert len(sys.argv) > 1
-    #solution = solve(read_input(sys.argv[1]))
     cities = read_input(sys.argv[1])
-    groups = kmeans(cities)
+    groups = kmeans(cities)[0]
+    centers = kmeans(cities)[1]
     print("groups")
     print(groups)
-    solution = solutionplus(groups,cities)
+    print("centers")
+    print(centers)
+    solution = solutionplus(groups,cities,centers)
     print_solution(solution)
