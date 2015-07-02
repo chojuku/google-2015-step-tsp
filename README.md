@@ -275,10 +275,10 @@ First, I should divide cities for groups, so I use K-means for dividing.
 http://tech.nitoyon.com/ja/blog/2013/11/07/k-means/
 
 ↑This site is good for understanding what K-means is visually.
-def initcenters(centers,n,cities):
-def calc_new_centers(group,n,N,cities):
-def make_group(centers,cities,n,N):
-def kmeans(cities):
+*def initcenters(centers,n,cities):
+*def calc_new_centers(group,n,N,cities):
+*def make_group(centers,cities,n,N):
+*def kmeans(cities):
 
 These functions are making groups by K-means.
 
@@ -289,11 +289,15 @@ And then, they are merged.
 
 
 Good Points
-
+* Salesmans don't leave points in a group !
 
 
 Bad Points
+* It takes longer journey......
 
+
+
+You can use solution_generateryuri.py for outputting the solver_yuri.py results.
 
 
 
