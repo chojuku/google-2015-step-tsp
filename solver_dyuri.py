@@ -62,8 +62,12 @@ def kmeans(cities):
 
 #ある1groupに対してgreedyな経路を作成する
 def solve(group,cities):
+    print("solvegroup")
+    print(group)
     grouptup = tuple(group)
     N = len(grouptup)
+    #print("grouptup")
+    ###print(grouptup)
     current_city = grouptup[0]
     unvisited_cities = set(grouptup[1:])#TypeError: unhashable type: 'list'
     solution = [current_city]
@@ -78,55 +82,37 @@ def solve(group,cities):
         current_city = next_city
     return solution
 
-#中心点のためのgreedy法
-def solve_centers(cities):
-    N = len(cities)
-
-    dist = [[0] * N for i in range(N)]
-    for i in range(N):
-        for j in range(N):
-            dist[i][j] = dist[j][i] = distance(cities[i], cities[j])
-
-    current_city = 0
-    unvisited_cities = set(range(1, N))
-    solution = [current_city]
-
-    def distance_from_current_city(to):
-        return dist[current_city][to]
-
-    while unvisited_cities:
-        next_city = min(unvisited_cities, key=distance_from_current_city)
-        unvisited_cities.remove(next_city)
-        solution.append(next_city)
-        current_city = next_city
-    return solution
-
-
 #centersはcitiesと同じ[(x_1,y_1),(x_2,y_2),,,]
-def making_centerlist(centers,cities):
+def making_centerlist(groups,cities,centers):
     center_solution =[]
-    kcenter = kmeans(centers)[0]#kcenter =[[0,2,7],[1,3,4,5,6],,,]
-   
-    #for l in range(len(kcenter)):#1st
-     #  center_solution.extend(kcenter[l])#1st
-    center_solution.extend(solve_centers(centers))#2nd
-    #print("center_solution")
-    #print(center_solution)
+    for l in range(len(groups)): #1way
+        center_solution.extend(groups[l]) #1way
+        #center_solution=solve(groups, centers) #2way#Error
+    print("center_solution")
+    print(center_solution)
     return center_solution
 
 #各グループで作られた経路を合併させる
 def solutionplus(groups,cities,centers):
     solution = [0]
-    center_list = making_centerlist(centers,cities)#各グループ重心のgreedy経路
+    center_list = making_centerlist(groups,cities,centers)#各グループ重心のgreedy経路
     #print("center_list")
     #print(center_list)
     for i in range(len(groups)):
-        k = center_list[i]#各グループの中心点のgreedy経路の順に並べる
+      #  for l in range(len(center_list[i])):
+     #       print(len(center_list[i]))
+      #      print("cente_lisgt[i][l]")
+       #     print(center_list[i][l])
+        k = center_list[i]#[l]#各グループの中心点のgreedy経路の順に並べる
+       # print("l=")
+       # print(l)
+       # print("i=")
+       # print(i)
+        #print("足しているもの")
+        #print(solve(groups[k],cities))
         solution += solve(groups[k],cities)
     return solution
     
-
-
 
 if __name__ == '__main__':
     assert len(sys.argv) > 1
@@ -138,4 +124,5 @@ if __name__ == '__main__':
     print("centers")
     print(centers)
     solution = solutionplus(groups,cities,centers)
+    print("ans")
     print_solution(solution)
